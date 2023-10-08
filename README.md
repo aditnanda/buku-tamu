@@ -26,8 +26,7 @@
 
 3. Set up Konfigurasi Laravel
     ```bash
-    copy .env.example .env
-    php artisan key:generate
+    modify file .env
     ```
 
 4. Setting database di .env
