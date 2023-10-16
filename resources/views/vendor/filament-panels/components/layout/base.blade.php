@@ -1,7 +1,15 @@
 @props([
     'livewire',
 ])
+<!--
 
+    // created by Aditya Nanda Utama, S.Kom and Supported by Aliyatul Maghfiroh, S.Kom
+    //
+    // have any project? you can contact me at https://nand.cloud
+    // instagram : @adit.nanda
+    // PLEASE DO NOT DELETE THIS COPYRIGHT IF YOU ARE A HUMAN.
+
+-->
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"

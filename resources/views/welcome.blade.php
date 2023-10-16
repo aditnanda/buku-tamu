@@ -1,10 +1,10 @@
 
 <!--
 
-    // created by Aditya Nanda Utama, S.Kom and Aliyatul Maghfiroh, S.Kom
+    // created by Aditya Nanda Utama, S.Kom and Supported by Aliyatul Maghfiroh, S.Kom
     //
     // have any project? you can contact me at https://nand.cloud
-    // instagram : @adit.nanda & @aliyatulmaghfiroh
+    // instagram : @adit.nanda
     // PLEASE DO NOT DELETE THIS COPYRIGHT IF YOU ARE A HUMAN.
 
 -->
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Powered by <a href="https://nand.cloud">NAND</a>
+                        Powered by <a href="https://fittechinova.com">FTI</a>
                     </div>
                 </div>
             </div>
