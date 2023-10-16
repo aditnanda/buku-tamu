@@ -49,6 +49,13 @@
                 </div>
 
                 <div class="form-control  w-full max-w-lg">
+                    <label for="" class="label">Foto Selfie</label>
+                    @if ($foto_tampil)
+                        <img src="{{ url('/'.$foto_tampil) }}">
+                    @endif
+                </div>
+
+                <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Janji</label>
                     <select type="text" class="select select-bordered w-full max-w-lg" wire:model='janji' disabled>
                         <option value="">Pilih</option>
@@ -60,7 +67,7 @@
                 <div class="form-control  w-full max-w-lg">
 
                     <button class="btn btn-sm"
-                        type="submit">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
+                        type="submit" wire:loading.attr="disabled">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
                 </div>
             </form>
         @else
@@ -81,6 +88,14 @@
                 </div>
 
                 <div class="form-control  w-full max-w-lg">
+                    <label for="" class="label">Foto Selfie</label>
+                    @if ($foto)
+                        <img src="{{ $foto->temporaryUrl() }}">
+                    @endif
+                    <input type="file" class="input input-bordered w-full max-w-lg" wire:model='foto' capture required>
+                </div>
+
+                <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Janji</label>
                     <select type="text" class="select select-bordered w-full max-w-lg" wire:model='janji' required>
                         <option value="">Pilih</option>
@@ -93,7 +108,7 @@
                 <div class="form-control  w-full max-w-lg">
 
                     <button class="btn btn-sm"
-                        type="submit">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
+                        type="submit" wire:loading.attr="disabled">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
                 </div>
             </form>
         @endif

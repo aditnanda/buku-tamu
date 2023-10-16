@@ -6,6 +6,7 @@ use App\Filament\Resources\TamuResource\Pages;
 use App\Filament\Resources\TamuResource\RelationManagers;
 use App\Models\Tamu;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -36,6 +37,8 @@ class TamuResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('janji')
                     ->maxLength(255),
+                FileUpload::make('foto')
+                    ->image()->downloadable()->openable(),
                 Forms\Components\TextInput::make('waktu_masuk'),
                 Forms\Components\TextInput::make('waktu_keluar'),
             ]);

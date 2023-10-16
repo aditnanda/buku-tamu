@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('instansi')->nullable();
             $table->string('keperluan')->nullable();
             $table->string('janji')->nullable();
+            $table->string('foto')->nullable();
             $table->time('waktu_masuk')->nullable();
             $table->time('waktu_keluar')->nullable();
             $table->timestamps();
