@@ -51,7 +51,7 @@
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Foto Selfie</label>
                     @if ($foto_tampil)
-                        <img src="{{ url('/'.$foto_tampil) }}">
+                        <img src="{{ url('/storage/'.$foto_tampil) }}">
                     @endif
                 </div>
 
