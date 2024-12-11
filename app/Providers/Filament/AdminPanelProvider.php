@@ -30,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->darkMode(false)
             ->brandLogo(asset('logo.png'))
             ->favicon(asset('logo.png'))
             ->sidebarCollapsibleOnDesktop()
@@ -56,13 +57,11 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->plugins([
-                \Hasnayeen\Themes\ThemesPlugin::make(),
                 FilamentAuthenticationLogPlugin::make(),
                 LightSwitchPlugin::make(),
                 BreezyCore::make()->myProfile(
