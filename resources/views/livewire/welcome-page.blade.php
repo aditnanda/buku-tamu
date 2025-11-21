@@ -19,20 +19,22 @@
         <button class="btn btn-sm" wire:click='prosesNomor()'>Proses</button>
     </div>
 
-
     @if ($flag)
         @if ($update)
+            {{-- MODE UPDATE: KUNJUNGAN KELUAR --}}
             <form wire:submit="save">
 
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Tanggal</label>
                     <input type="date" class="input input-bordered w-full max-w-lg" wire:model='tanggal' disabled>
                 </div>
+
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Waktu Masuk</label>
                     <input type="time" class="input input-bordered w-full max-w-lg" wire:model='waktu_masuk'
                         disabled>
                 </div>
+
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Nama Lengkap</label>
                     <input type="text" class="input input-bordered w-full max-w-lg" wire:model='nama' disabled>
@@ -46,6 +48,17 @@
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Keperluan</label>
                     <input type="text" class="input input-bordered w-full max-w-lg" wire:model='keperluan' disabled>
+                </div>
+
+                {{-- 🔹 Jenis Pengunjung (read only) --}}
+                <div class="form-control  w-full max-w-lg">
+                    <label for="" class="label">Jenis Pengunjung</label>
+                    <select class="select select-bordered w-full max-w-lg" wire:model='jenis_pengunjung_id' disabled>
+                        <option value="">Pilih Jenis Pengunjung</option>
+                        @foreach ($jenisPengunjungs as $jp)
+                            <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-control  w-full max-w-lg">
@@ -63,14 +76,17 @@
                         <option value="Tidak">Tidak</option>
                     </select>
                 </div>
+
                 <p><br></p>
                 <div class="form-control  w-full max-w-lg">
-
                     <button class="btn btn-sm"
-                        type="submit" wire:loading.attr="disabled">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
+                        type="submit" wire:loading.attr="disabled">
+                        {{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}
+                    </button>
                 </div>
             </form>
         @else
+            {{-- MODE CREATE: KUNJUNGAN MASUK --}}
             <form wire:submit="save">
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Nama Lengkap</label>
@@ -87,12 +103,24 @@
                     <input type="text" class="input input-bordered w-full max-w-lg" wire:model='keperluan' required>
                 </div>
 
+                {{-- 🔹 Jenis Pengunjung (select dari master) --}}
+                <div class="form-control  w-full max-w-lg">
+                    <label for="" class="label">Jenis Pengunjung</label>
+                    <select class="select select-bordered w-full max-w-lg"
+                        wire:model='jenis_pengunjung_id' required>
+                        <option value="">Pilih Jenis Pengunjung</option>
+                        @foreach ($jenisPengunjungs as $jp)
+                            <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="form-control  w-full max-w-lg">
                     <label for="" class="label">Foto Selfie</label>
                     @if ($foto)
                         <img src="{{ $foto->temporaryUrl() }}">
                     @endif
-                    <input type="file" class="input input-bordered w-full max-w-lg" wire:model='foto' capture required>
+                    <input type="file" class="input input-bordered w-full max-w-lg" wire:model='foto' capture required accept="image/*">
                 </div>
 
                 <div class="form-control  w-full max-w-lg">
@@ -106,15 +134,12 @@
 
                 <p><br></p>
                 <div class="form-control  w-full max-w-lg">
-
                     <button class="btn btn-sm"
-                        type="submit" wire:loading.attr="disabled">{{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}</button>
+                        type="submit" wire:loading.attr="disabled">
+                        {{ $update ? 'Submit Kunjungan Keluar' : 'Submit Kunjungan Masuk' }}
+                    </button>
                 </div>
             </form>
         @endif
-
-
     @endif
-
-
 </div>

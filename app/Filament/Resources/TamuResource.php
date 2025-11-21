@@ -28,21 +28,36 @@ class TamuResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('nomor')
                     ->maxLength(255),
+
                 Forms\Components\DatePicker::make('tanggal'),
+
                 Forms\Components\TextInput::make('nama')
                     ->maxLength(255),
+
+                Forms\Components\Select::make('jenis_pengunjung_id')
+                    ->label('Jenis Pengunjung')
+                    ->relationship('jenisPengunjung', 'nama')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
                 Forms\Components\TextInput::make('instansi')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('keperluan')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('janji')
                     ->maxLength(255),
+
                 FileUpload::make('foto')
-                    ->image()->downloadable()->openable(),
+                    ->image()
+                    ->downloadable()
+                    ->openable(),
+
                 Forms\Components\TextInput::make('waktu_masuk'),
                 Forms\Components\TextInput::make('waktu_keluar'),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -54,6 +69,10 @@ class TamuResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('jenisPengunjung.nama')
+                    ->label('Jenis Pengunjung')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('instansi')
                     ->searchable(),

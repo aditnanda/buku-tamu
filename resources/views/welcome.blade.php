@@ -1,9 +1,9 @@
 
 <!--
 
-    // created by Aditya Nanda Utama, S.Kom and Supported by Aliyatul Maghfiroh, S.Kom
+    // created by Aditya Nanda Utama, S.Kom
     //
-    // have any project? you can contact me at https://nand.cloud
+    // have any project? you can contact me at https://nand.my.id
     // instagram : @adit.nanda
     // PLEASE DO NOT DELETE THIS COPYRIGHT IF YOU ARE A HUMAN.
 
