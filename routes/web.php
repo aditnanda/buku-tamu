@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class,'index']);
+
+// Buku Tamu (tanpa Livewire - HTML/CSS/JS)
+Route::post('/buku-tamu/proses', [GuestbookController::class, 'prosesNomor'])->name('buku-tamu.proses');
+Route::post('/buku-tamu/submit', [GuestbookController::class, 'submit'])->name('buku-tamu.submit');

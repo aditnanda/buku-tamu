@@ -124,4 +124,11 @@ class TamuResource extends Resource
             'edit' => Pages\EditTamu::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->orderByDesc('created_at'); // atau ->latest()
+    }
+
 }
