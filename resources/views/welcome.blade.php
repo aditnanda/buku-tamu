@@ -409,7 +409,7 @@
                     <div class="divider"></div>
                 </form>
 
-                <form id="formSubmit" method="POST" action="{{ route('buku-tamu.submit') }}" enctype="multipart/form-data" class="hidden">
+                <form id="formSubmit" method="POST" action="{{ route('buku-tamu.submit', [], false) }}" enctype="multipart/form-data" class="hidden">
                     @csrf
                     <input type="hidden" name="mode" id="mode" value="create">
                     <input type="hidden" name="id_tamu" id="id_tamu" value="">
@@ -481,8 +481,8 @@
 <script>
     (function () {
         const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const endpointProses = @json(route('buku-tamu.proses'));
-        const endpointSubmit = @json(route('buku-tamu.submit'));
+        const endpointProses = @json(route('buku-tamu.proses', [], false));
+        const endpointSubmit = @json(route('buku-tamu.submit', [], false));
 
         const alertEl = document.getElementById('alert');
         const alertText = document.getElementById('alertText');
