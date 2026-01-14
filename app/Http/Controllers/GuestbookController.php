@@ -16,10 +16,12 @@ class GuestbookController extends Controller
         $data = $request->validate([
             // pakai string supaya aman untuk nomor dengan awalan 0
             'nomor' => ['required', 'string', 'max:50'],
+            'jenis_pengunjung_id' => ['required'],
         ]);
 
         $tamu = Tamu::query()
             ->where('nomor', $data['nomor'])
+            ->where('jenis_pengunjung_id', $data['jenis_pengunjung_id'])
             ->whereNull('waktu_keluar')
             ->where('tanggal', date('Y-m-d'))
             ->first();
@@ -64,6 +66,7 @@ class GuestbookController extends Controller
             $data = $request->validate([
                 'id_tamu' => ['nullable', 'integer'],
                 'nomor' => ['required', 'string', 'max:50'],
+                'jenis_pengunjung_id' => ['required'],
             ]);
 
             $tamu = null;
@@ -73,6 +76,7 @@ class GuestbookController extends Controller
             if (!$tamu) {
                 $tamu = Tamu::query()
                     ->where('nomor', $data['nomor'])
+                    ->where('jenis_pengunjung_id', $data['jenis_pengunjung_id'])
                     ->whereNull('waktu_keluar')
                     ->where('tanggal', date('Y-m-d'))
                     ->first();

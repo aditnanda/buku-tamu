@@ -1,10 +1,8 @@
 <!--
-
     // created by Aditya Nanda Utama, S.Kom
     // have any project? you can contact me at https://nand.my.id
     // instagram : @adit.nanda
     // PLEASE DO NOT DELETE THIS COPYRIGHT IF YOU ARE A HUMAN.
-
 -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -17,7 +15,6 @@
 
     <style>
         :root {
-            /* Brand-ish palette (tanpa hardcode logo): hijau-perkebunan + earth tone */
             --brand-950: #0b2f1f;
             --brand-900: #0f3d2a;
             --brand-800: #14543b;
@@ -51,8 +48,7 @@
             inset: 0;
             pointer-events: none;
             opacity: .7;
-            background-image:
-                radial-gradient(rgba(15, 61, 42, .07) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(15, 61, 42, .07) 1px, transparent 1px);
             background-size: 22px 22px;
         }
 
@@ -149,31 +145,10 @@
 
         .right { padding: 22px; background: var(--card); }
 
-        .headline {
-            margin: 10px 0 8px;
-            font-size: 28px;
-            letter-spacing: -0.4px;
-            line-height: 1.1;
-        }
         .sub {
             margin: 0 0 16px;
             color: var(--muted);
             line-height: 1.55;
-        }
-
-        .chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 16px 0 14px;
-        }
-
-        .chip {
-            font-size: 12px;
-            padding: 8px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(15, 23, 42, .10);
-            background: rgba(255, 255, 255, .6);
         }
 
         .steps {
@@ -307,7 +282,6 @@
         }
 
         .muted { color: var(--muted); }
-        .small { font-size: 12px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -320,7 +294,6 @@
         <header class="topbar">
             <div class="brand">
                 <div class="logo" aria-hidden="true">
-                    {{-- kalau logo.png ada di public, otomatis tampil. kalau tidak ada, tetap aman (background gradient) --}}
                     <img src="{{ url('logo.png') }}" alt="" onerror="this.style.display='none'">
                 </div>
                 <div>
@@ -340,8 +313,8 @@
         <section class="content">
             <aside class="left">
                 <p class="sub">
-                    Cukup input nomor tamu →
-                    sistem akan mendeteksi apakah Anda sedang <b>check-in</b> atau <b>check-out</b>.
+                    Pilih <b>Jenis Pengunjung</b> & input <b>Nomor Tamu</b> →
+                    sistem mendeteksi Anda sedang <b>check-in</b> atau <b>check-out</b>.
                 </p>
 
                 <ul class="steps">
@@ -351,7 +324,7 @@
                                 <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </span>
-                        Masukkan <b>Nomor Tamu</b> lalu klik <b>Proses</b>.
+                        Pilih Jenis Pengunjung & isi Nomor Tamu lalu klik Proses.
                     </li>
                     <li>
                         <span class="dot" aria-hidden="true">
@@ -359,7 +332,7 @@
                                 <path d="M7 12l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        Lengkapi data (jika kunjungan masuk) atau konfirmasi (jika kunjungan keluar).
+                        Lengkapi data (kunjungan masuk) / konfirmasi (kunjungan keluar).
                     </li>
                     <li>
                         <span class="dot" aria-hidden="true">
@@ -367,7 +340,7 @@
                                 <path d="M12 21s8-4.5 8-10V6l-8-3-8 3v5c0 5.5 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        Data akan tersimpan.
+                        Data tersimpan otomatis.
                     </li>
                 </ul>
             </aside>
@@ -391,11 +364,25 @@
                     </div>
                 @endif
 
+                <!-- FORM PROSES (AWAL) -->
                 <form id="formProses" novalidate>
-                    <div class="field">
-                        <label for="nomor">Nomor Tamu</label>
-                        <input id="nomor" name="nomor" inputmode="numeric" autocomplete="off" placeholder="Contoh: 02" required>
+                    <div class="row">
+                        <div class="field">
+                            <label for="jenis_pengunjung_id_proses">Jenis Pengunjung</label>
+                            <select id="jenis_pengunjung_id_proses" required>
+                                <option value="">Pilih Jenis Pengunjung</option>
+                                @foreach ($jenisPengunjungs as $jp)
+                                    <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="nomor">Nomor Tamu</label>
+                            <input id="nomor" name="nomor" inputmode="numeric" autocomplete="off" placeholder="Contoh: 02" required>
+                        </div>
                     </div>
+
                     <div class="actions">
                         <button id="btnProses" class="btn primary" type="submit">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="18" height="18">
@@ -409,11 +396,24 @@
                     <div class="divider"></div>
                 </form>
 
+                <!-- FORM SUBMIT -->
                 <form id="formSubmit" method="POST" action="{{ route('buku-tamu.submit', [], false) }}" enctype="multipart/form-data" class="hidden">
                     @csrf
                     <input type="hidden" name="mode" id="mode" value="create">
                     <input type="hidden" name="id_tamu" id="id_tamu" value="">
                     <input type="hidden" name="nomor" id="nomorHidden" value="">
+                    <input type="hidden" name="jenis_pengunjung_id" id="jenisHidden" value="">
+
+                    <!-- Display saja (tidak ikut submit) -->
+                    <div class="field">
+                        <label for="jenis_pengunjung_id_display">Jenis Pengunjung (dari langkah awal)</label>
+                        <select id="jenis_pengunjung_id_display" disabled>
+                            <option value="">-</option>
+                            @foreach ($jenisPengunjungs as $jp)
+                                <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="row">
                         <div class="field">
@@ -433,15 +433,6 @@
 
                     <div class="row">
                         <div class="field">
-                            <label for="jenis_pengunjung_id">Jenis Pengunjung</label>
-                            <select id="jenis_pengunjung_id" name="jenis_pengunjung_id">
-                                <option value="">Pilih Jenis Pengunjung</option>
-                                @foreach ($jenisPengunjungs as $jp)
-                                    <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="field">
                             <label for="janji">Janji</label>
                             <select id="janji" name="janji">
                                 <option value="">Pilih</option>
@@ -449,6 +440,7 @@
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
+                        <div class="field"></div>
                     </div>
 
                     <div class="field" id="photoField">
@@ -491,11 +483,15 @@
         const btnProses = document.getElementById('btnProses');
         const btnReset = document.getElementById('btnReset');
         const nomorInput = document.getElementById('nomor');
+        const jenisProses = document.getElementById('jenis_pengunjung_id_proses');
 
         const formSubmit = document.getElementById('formSubmit');
         const mode = document.getElementById('mode');
         const idTamu = document.getElementById('id_tamu');
         const nomorHidden = document.getElementById('nomorHidden');
+        const jenisHidden = document.getElementById('jenisHidden');
+        const jenisDisplay = document.getElementById('jenis_pengunjung_id_display');
+
         const btnSubmit = document.getElementById('btnSubmit');
         const btnSubmitText = document.getElementById('btnSubmitText');
 
@@ -503,7 +499,6 @@
         const instansi = document.getElementById('instansi');
         const keperluan = document.getElementById('keperluan');
         const janji = document.getElementById('janji');
-        const jenis = document.getElementById('jenis_pengunjung_id');
         const foto = document.getElementById('foto');
         const photoField = document.getElementById('photoField');
         const photoPreviewWrap = document.getElementById('photoPreviewWrap');
@@ -524,17 +519,29 @@
             button.style.opacity = loading ? '.85' : '1';
         }
 
+        function lockProsesFields(lock) {
+            nomorInput.disabled = !!lock;
+            jenisProses.disabled = !!lock;
+            btnProses.disabled = !!lock;
+        }
+
         function resetAll() {
             hideAlert();
             formProses.reset();
             formSubmit.reset();
             formSubmit.classList.add('hidden');
+
             mode.value = 'create';
             idTamu.value = '';
             nomorHidden.value = '';
+            jenisHidden.value = '';
+
+            if (jenisDisplay) jenisDisplay.value = '';
             btnSubmitText.textContent = 'Submit Kunjungan Masuk';
 
+            lockProsesFields(false);
             setCreateMode();
+
             photoPreviewWrap.classList.add('hidden');
             photoPreview.removeAttribute('src');
         }
@@ -542,15 +549,12 @@
         function setCreateMode() {
             mode.value = 'create';
 
-            // enable fields
-            [nama, instansi, keperluan, janji, jenis].forEach(el => el.disabled = false);
+            [nama, instansi, keperluan, janji].forEach(el => el.disabled = false);
 
-            // require create fields
             nama.required = true;
             instansi.required = true;
             keperluan.required = true;
             janji.required = true;
-            jenis.required = true;
             foto.required = true;
 
             foto.classList.remove('hidden');
@@ -560,23 +564,18 @@
         function setExitMode() {
             mode.value = 'exit';
 
-            // disable fields (read-only)
-            [nama, instansi, keperluan, janji, jenis].forEach(el => el.disabled = true);
+            [nama, instansi, keperluan, janji].forEach(el => el.disabled = true);
 
-            // remove required on create-only inputs
             nama.required = false;
             instansi.required = false;
             keperluan.required = false;
             janji.required = false;
-            jenis.required = false;
             foto.required = false;
 
-            // hide upload input (tetap bisa tampilkan preview)
             foto.value = '';
             foto.classList.add('hidden');
         }
 
-        // preview foto saat create
         foto.addEventListener('change', () => {
             const f = foto.files && foto.files[0];
             if (!f) {
@@ -596,6 +595,13 @@
             hideAlert();
 
             const nomor = (nomorInput.value || '').trim();
+            const jenisVal = (jenisProses.value || '').trim();
+
+            if (!jenisVal) {
+                showAlert('error', 'Jenis Pengunjung wajib dipilih.');
+                jenisProses.focus();
+                return;
+            }
             if (!nomor) {
                 showAlert('error', 'Nomor wajib diisi.');
                 nomorInput.focus();
@@ -613,20 +619,31 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrf,
                     },
-                    body: JSON.stringify({ nomor }),
+                    body: JSON.stringify({
+                        nomor,
+                        jenis_pengunjung_id: parseInt(jenisVal, 10),
+                    }),
                 });
 
                 const payload = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                    const msg = payload?.message || 'Gagal memproses nomor.';
-                    throw new Error(msg);
+                    if (res.status === 422 && payload.errors) {
+                        const firstKey = Object.keys(payload.errors)[0];
+                        const firstMsg = payload.errors[firstKey]?.[0] || 'Validasi gagal.';
+                        throw new Error(firstMsg);
+                    }
+                    throw new Error(payload?.message || 'Gagal memproses nomor.');
                 }
 
+                // kunci pilihan awal + simpan ke hidden submit
                 nomorHidden.value = nomor;
+                jenisHidden.value = jenisVal;
+                if (jenisDisplay) jenisDisplay.value = jenisVal;
+
                 formSubmit.classList.remove('hidden');
+                lockProsesFields(true);
 
                 if (payload.update && payload.tamu) {
-                    // exit mode
                     setExitMode();
                     idTamu.value = payload.tamu.id || '';
 
@@ -634,7 +651,13 @@
                     instansi.value = payload.tamu.instansi || '';
                     keperluan.value = payload.tamu.keperluan || '';
                     janji.value = payload.tamu.janji || '';
-                    jenis.value = payload.tamu.jenis_pengunjung_id || '';
+
+                    // sync jenis (safety)
+                    const jenisDb = String(payload.tamu.jenis_pengunjung_id || '');
+                    if (jenisDb) {
+                        jenisHidden.value = jenisDb;
+                        if (jenisDisplay) jenisDisplay.value = jenisDb;
+                    }
 
                     btnSubmitText.textContent = 'Submit Kunjungan Keluar';
                     showAlert('success', 'Data ditemukan. Silakan submit untuk kunjungan keluar.');
@@ -647,16 +670,15 @@
                         photoPreview.removeAttribute('src');
                     }
                 } else {
-                    // create mode
                     setCreateMode();
                     idTamu.value = '';
-                    // reset data fields (nomor tetap)
+
                     [nama, instansi, keperluan].forEach(el => el.value = '');
                     janji.value = '';
-                    jenis.value = '';
                     foto.value = '';
                     photoPreviewWrap.classList.add('hidden');
                     photoPreview.removeAttribute('src');
+
                     btnSubmitText.textContent = 'Submit Kunjungan Masuk';
                     showAlert('success', 'Nomor belum check-in hari ini. Silakan lengkapi data kunjungan masuk.');
                 }
@@ -669,7 +691,6 @@
         });
 
         formSubmit.addEventListener('submit', async (e) => {
-            // tetap ada fallback normal submit jika fetch gagal total
             e.preventDefault();
             hideAlert();
 
@@ -688,7 +709,6 @@
 
                 const payload = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                    // handle 422
                     if (res.status === 422 && payload.errors) {
                         const firstKey = Object.keys(payload.errors)[0];
                         const firstMsg = payload.errors[firstKey]?.[0] || 'Validasi gagal.';
@@ -696,8 +716,8 @@
                     }
                     throw new Error(payload?.message || 'Gagal menyimpan data.');
                 }
-                resetAll();
 
+                resetAll();
                 showAlert('success', payload.message || 'Berhasil disubmit.');
             } catch (err) {
                 showAlert('error', err?.message || 'Terjadi kesalahan saat submit.');
@@ -706,7 +726,6 @@
             }
         });
 
-        // init
         resetAll();
     })();
 </script>
