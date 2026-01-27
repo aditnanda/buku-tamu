@@ -469,6 +469,7 @@
         </footer>
     </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     (function () {
@@ -507,11 +508,22 @@
         function showAlert(type, message) {
             alertEl.className = 'alert show ' + (type || '');
             alertText.textContent = message;
+
+            const icon = (type === 'success') ? 'success' : (type === 'error' ? 'error' : 'info');
+            return Swal.fire({
+                icon,
+                title: (icon === 'success') ? 'Berhasil' : (icon === 'error' ? 'Gagal' : 'Info'),
+                text: message || '',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            });
         }
 
         function hideAlert() {
             alertEl.className = 'alert';
             alertText.textContent = '';
+            if (window.Swal) Swal.close();
         }
 
         function setLoading(button, loading) {
@@ -660,7 +672,7 @@
                     }
 
                     btnSubmitText.textContent = 'Submit Kunjungan Keluar';
-                    showAlert('success', 'Data ditemukan. Silakan submit untuk kunjungan keluar.');
+                    // showAlert('success', 'Data ditemukan. Silakan submit untuk kunjungan keluar.');
 
                     if (payload.tamu.foto_url) {
                         photoPreview.src = payload.tamu.foto_url;
@@ -680,7 +692,7 @@
                     photoPreview.removeAttribute('src');
 
                     btnSubmitText.textContent = 'Submit Kunjungan Masuk';
-                    showAlert('success', 'Nomor belum check-in hari ini. Silakan lengkapi data kunjungan masuk.');
+                    // showAlert('success', 'Nomor belum check-in hari ini. Silakan lengkapi data kunjungan masuk.');
                 }
             } catch (err) {
                 showAlert('error', err?.message || 'Terjadi kesalahan.');
@@ -718,9 +730,9 @@
                 }
 
                 resetAll();
-                showAlert('success', payload.message || 'Berhasil disubmit.');
+                await showAlert('success', payload.message || 'Berhasil disubmit.');
             } catch (err) {
-                showAlert('error', err?.message || 'Terjadi kesalahan saat submit.');
+                await showAlert('error', err?.message || 'Terjadi kesalahan saat submit.');
             } finally {
                 setLoading(btnSubmit, false);
             }
